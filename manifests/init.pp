@@ -34,7 +34,7 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class krb5 (
-	$autoupgrade = true,
+	$autoupgrade = false,
 	$ensure = 'present',
 	$package = $krb5::params::package,
 	$config_file = $krb5::params::config_file,

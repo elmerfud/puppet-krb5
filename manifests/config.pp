@@ -2,6 +2,7 @@ class krb5::config (
 	$krb5default			= '',
 	$krb5ticket_lifetime	= '25h',
 	$krb5renew_lifetime		= '120h',
+  $krb5clockskew      = '300',
 	$krb5forwardable		= 'true',
 	$krb5proxiable			= 'true',
 	$krb5enctype			= ['arcfour-hmac-md5','aes256-cts','aes128-cts','des3-cbc-sha1','des-cbc-md5','des-cbc-crc'],
@@ -14,17 +15,17 @@ class krb5::config (
             'renewable'   => 'true',
             'forwardable' => 'true',
         },
-	$config_file = $krb5::config_file,
+	$config_file = $krb5::params::config_file,
   $krb5udppreferencelimit = undef,
   $krb5dnslookuprealm = undef,
   $krb5dnslookupkdc = undef,
   $krb5allowweakcrypto = undef
-) {
+) inherits krb5::params {
   
 	if $krb5::config_file_static != undef {
 		fail( '$krb5::config_file_static defined, you can not use dynamic config generation if use static config' )
 	}
-	
+  include krb5	
 	include concat::setup
 	Class[ 'krb5::config' ] -> Class[ 'krb5' ]
 	
